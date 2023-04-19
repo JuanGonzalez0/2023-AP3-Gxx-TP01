@@ -41,7 +41,7 @@ function draw() {
         perder(); //si en el casillero hay una mina ejecuta la funcion perder 
       }
       else{
-        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //se pasan los parametros de filas y columnas 
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //se pasan los parametros de filas y columnas y pinta el casillero
         descubrirCasillero(columnaPresionada, filaPresionada); //caso de que no se encuentre una mina en el casillero se descubrira el mismo
         
     
@@ -75,7 +75,7 @@ function ponerMinasTablero()
 {
   let minas = CANTIDAD_MINAS;
   while(minas != 0){
-    let numeroRandomCol = Math.floor(Math.random() * COLUMNAS); //el math.floor devuelve el máximo entero menor o igual a un número. math.random se multiplica la columna y dara un valor entre el numero de columnas
+    let numeroRandomCol = Math.floor(Math.random() * COLUMNAS); //el math.floor devuelve un truncamiento del entero. math.random se multiplica con la columna y dara un valor entre el numero de columnas
     let numeroRandomFil = Math.floor(Math.random() * FILAS);
     if(!tieneMinaCasillero(numeroRandomCol, numeroRandomFil)){ //el signo ! es para invertir la funcion. pregunto si la fila y el casillero tiene mina
       minas -= 1; //resta una mina de las disponibles en la variable
