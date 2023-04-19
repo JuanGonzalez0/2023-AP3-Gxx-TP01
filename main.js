@@ -28,30 +28,30 @@ function setup()
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
   // Modificar/completar
-  casillerosSinDescubrir = COLUMNAS * FILAS;
-  ponerMinasTablero();
+  casillerosSinDescubrir = COLUMNAS * FILAS; //asigna la cantidad de casilleros sin descubrir al inicio del juego
+  ponerMinasTablero(); //coloca las minas al inicio del juego
 }
 
 
 function draw() {
   if (hizoClick == true)
   {
-    if(mouseButton == LEFT){
-      if(tieneMinaCasillero(columnaPresionada, filaPresionada)){
-        perder();
+    if(mouseButton == LEFT){ //Verifica si el boton presionado es el izquierdo
+      if(tieneMinaCasillero(columnaPresionada, filaPresionada)){ //verifica si el casillero tiene una mina
+        perder(); //si en el casillero hay una mina ejecuta la funcion perder 
       }
       else{
-        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-        descubrirCasillero(columnaPresionada, filaPresionada);
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //se pasan los parametros de filas y columnas 
+        descubrirCasillero(columnaPresionada, filaPresionada); //caso de que no se encuentre una mina en el casillero se descubrira el mismo
         
     
       }
-      if(ganoElJuego() == true){
+      if(ganoElJuego() == true){ //en caso de que se devuelva un verdadero en la funcion ganoElJuego se ejecutara la funcion ganar
         ganar();
       }
     }
     if(mouseButton == RIGHT){
-      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO);
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO); //seria como la bandera del buscaminas indicando que se piensa que hay una mina en el casillero
     }
     
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
@@ -62,24 +62,24 @@ function draw() {
 
 function ganoElJuego()
 {
-  if(casillerosSinDescubrir == CANTIDAD_MINAS){
+  if(casillerosSinDescubrir == CANTIDAD_MINAS){ //si la cantidad de casilleros sin descubrir son las mismas que la cantidad de minas devolvera un true indicando que gano el juego
     return true; 
   }
   else{
     return false;
   }
-    //Esto hace que NUNCA gane el juego. Modificar/completar
+
 }
 
 function ponerMinasTablero()
 {
   let minas = CANTIDAD_MINAS;
   while(minas != 0){
-    let numeroRandomCol = Math.floor(Math.random() * COLUMNAS);
+    let numeroRandomCol = Math.floor(Math.random() * COLUMNAS); //el math.floor devuelve el máximo entero menor o igual a un número. math.random se multiplica la columna y dara un valor entre el numero de columnas
     let numeroRandomFil = Math.floor(Math.random() * FILAS);
-    if(!tieneMinaCasillero(numeroRandomCol, numeroRandomFil)){
-      minas -= 1;
-      ponerMinaCasillero(numeroRandomCol, numeroRandomFil);
+    if(!tieneMinaCasillero(numeroRandomCol, numeroRandomFil)){ //el signo ! es para invertir la funcion. pregunto si la fila y el casillero tiene mina
+      minas -= 1; //resta una mina de las disponibles en la variable
+      ponerMinaCasillero(numeroRandomCol, numeroRandomFil); //coloca la mina
     }
   }
 }
@@ -94,8 +94,18 @@ function mostrarMinas()
     }
   }
 }
+//recorro el tablero y si hay una mina en el casillero le pido que lo coloree de rojo
+
 
 function contarMinasAlrededor(columna, fila)
 {
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+  let cont = 0; // declaramos un contador
+  let arr1 = [-1,0,1,1,1,0,-1,-1]; //declaro un array con las posiciomes de x
+  let arr2 = [-1,-1,-1,0,1,1,1,0]; //declaro un array con las posiciones en y
+  for(let i = 0; i < 8; i++){ //contara los siguientes 8 casilleros de alrededor
+    if(tieneMinaCasillero(columna+arr1[i],fila+arr2[i])){ //se suma la columna y el array para recorrer alrededor del casillero
+      cont++; //el contador indicara cuantas minas hay alrededor
+    }
+  }
+  return cont;
 }
