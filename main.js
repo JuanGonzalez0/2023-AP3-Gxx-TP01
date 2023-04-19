@@ -107,5 +107,5 @@ function contarMinasAlrededor(columna, fila)
       cont++; //el contador indicara cuantas minas hay alrededor
     }
   }
-  return cont;
+  return cont; // hara un return de las minas al rededor del casillero
 }
